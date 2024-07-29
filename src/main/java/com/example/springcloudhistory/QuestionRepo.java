@@ -1,2 +1,6 @@
-package com.example.springcloudhistory;public interface QuestionRepo {
+package com.example.springcloudhistory;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface QuestionRepo extends JpaRepository<Question,Integer> {
 }
