@@ -3,7 +3,10 @@ package com.example.springcloudhistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -12,9 +15,12 @@ public class Controller {
     private  QuestionRepo questionRepo;
 
     @GetMapping("/sections")
-    public List<Question> getQuestion(){
-       return questionRepo.findAll();
+    public List<Question> getQuestion(@RequestParam(value = "amount", defaultValue = "10") int amount) {
+        List<Question> questions =questionRepo.findAll();
+        Collections.shuffle(questions);
+        return questions.stream().limit(amount).collect(Collectors.toList());
     }
+
     @PostMapping("/save")
     public Question save( @RequestBody Question question){
        return questionRepo.save(question);
